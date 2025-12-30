@@ -32,7 +32,8 @@ export const HomePage = () => {
             Master new skills with
             <br />
             <span
-              className="bg-gradient-to-r from-primary-foreground via-muted-foreground to-primary bg-clip-text text-transparent dark:from-white dark:via-gray-400 dark:to-gray-700"
+              className="bg-gradient-to-r  bg-clip-text text-transparent dark:from-gray-300 
+             from-gray-400 via-gray-600 to-gray-900 dark:via-gray-600 dark:to-gray-700"
             >
               curated video courses
             </span>
@@ -42,11 +43,9 @@ export const HomePage = () => {
           </p>
         </section>
 
-        {/* Playlists Grid */}
         <section>
           <div className="mb-6 flex items-center justify-between">
             <span className="text-sm text-muted-foreground">
-              {/* {playlists.length} courses available */}
             </span>
             <Button>
               <CiPlay1 />
@@ -79,12 +78,21 @@ export const HomePage = () => {
             </p>
           </Card>
         </div>
+        <div className="w-full flex justify-center items-center flex-col">
+        <hr className="w-full border-t border-border mt-12" />
+          <h1 className="text-2xl font-bold mt-15">Ready to start learning?</h1>
+          <p className="text-sm text-gray-600">Browse our collection of from courses and begin your journey today.</p>
+          <Button className="mt-7">
+            <CiPlay1 />
+            Start Learning
+          </Button>
+        </div>
       </main>
 
       {/* Footer */}
       <footer className="mt-20 border-t border-border py-8">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          <p>© 2024 LearnHub. Built with passion for learning.</p>
+          <p>© 2026 LearnHub. Built with passion for learning.</p>
         </div>
       </footer>
     </div>
