@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { CiPlay1 } from "react-icons/ci";
 import { Card } from "../ui/card";
 import { FaBoltLightning, FaBookOpen, FaPeopleGroup } from "react-icons/fa6";
+import { PiShootingStarDuotone } from "react-icons/pi";
 
 export const HomePage = () => {
   return (
@@ -26,13 +27,13 @@ export const HomePage = () => {
         <section className="mb-16 animate-fade-in">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <div className="h-4 w-4" />
-            <span className="text-muted-foreground">Your learning journey starts here</span>
+            <span className="px-2 border rounded-full flex justify-center items-center gap-3"> <PiShootingStarDuotone/> Your learning journey starts here</span>
           </div>
           <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl text-foreground">
             Master new skills with
             <br />
             <span
-              className="bg-gradient-to-r  bg-clip-text text-transparent dark:from-gray-300 
+              className="bg-linear-to-r  bg-clip-text text-transparent dark:from-gray-300 
              from-gray-400 via-gray-600 to-gray-900 dark:via-gray-600 dark:to-gray-700"
             >
               curated video courses
