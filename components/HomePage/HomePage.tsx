@@ -29,7 +29,7 @@ export const HomePage = () => {
             <div className="h-4 w-4" />
             <span className="px-2 border rounded-full flex justify-center items-center gap-3"> <PiShootingStarDuotone/> Your learning journey starts here</span>
           </div>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl text-foreground">
+          <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-7xl text-foreground">
             Master new skills with
             <br />
             <span
