@@ -1,6 +1,8 @@
-
 import { ModeToggle } from "../ui/Modetoggle";
 import { Button } from "../ui/button";
+import { CiPlay1 } from "react-icons/ci";
+import { Card } from "../ui/card";
+import { FaBoltLightning, FaBookOpen, FaPeopleGroup } from "react-icons/fa6";
 
 export const HomePage = () => {
   return (
@@ -16,12 +18,11 @@ export const HomePage = () => {
           <span className="ml-2 text-xl font-semibold tracking-tight">LearnHub</span>
         </div>
         <div className="flex items-center gap-2">
-          <ModeToggle/>
+          <ModeToggle />
           <Button>Sign In</Button>
         </div>
       </nav>
       <main className="flex justify-center items-center flex-col container mx-auto px-4 py-12 flex-1">
-        {/* Hero Section */}
         <section className="mb-16 animate-fade-in">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <div className="h-4 w-4" />
@@ -44,12 +45,40 @@ export const HomePage = () => {
         {/* Playlists Grid */}
         <section>
           <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-xl font-semibold tracking-tight text-foreground">Featured Courses</h2>
             <span className="text-sm text-muted-foreground">
               {/* {playlists.length} courses available */}
             </span>
+            <Button>
+              <CiPlay1 />
+              Start Learning
+            </Button>
           </div>
         </section>
+
+        <hr className="w-full border-t border-border mt-12" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full mt-10">
+          <Card className="flex flex-col items-center text-center p-6 h-full">
+            <FaBookOpen className="dark:text-white text-black border rounded-xl p-3 size-12 mb-4" />
+            <h1 className="text-lg font-semibold mb-2">Curated Content</h1>
+            <p className="text-muted-foreground text-sm">
+              Hand-picked playlists from the best educators on YouTube, organized for optimal learning.
+            </p>
+          </Card>
+          <Card className="flex flex-col items-center text-center p-6 h-full">
+            <FaBoltLightning className="dark:text-white text-black border rounded-xl p-3 size-12 mb-4" />
+            <h1 className="text-lg font-semibold mb-2">Learn at Your Pace</h1>
+            <p className="text-muted-foreground text-sm">
+              Watch videos directly here or on YouTube. Track your progress and pick up where you left off.
+            </p>
+          </Card>
+          <Card className="flex flex-col items-center text-center p-6 h-full">
+            <FaPeopleGroup className="dark:text-white text-black border rounded-xl p-3 size-12 mb-4" />
+            <h1 className="text-lg font-semibold mb-2">Community Driven</h1>
+            <p className="text-muted-foreground text-sm">
+              Courses recommended by learners like you. Quality content that actually helps you grow.
+            </p>
+          </Card>
+        </div>
       </main>
 
       {/* Footer */}
