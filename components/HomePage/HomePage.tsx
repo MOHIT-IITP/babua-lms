@@ -4,6 +4,7 @@ import { CiPlay1 } from "react-icons/ci";
 import { Card } from "../ui/card";
 import { FaBoltLightning, FaBookOpen, FaPeopleGroup } from "react-icons/fa6";
 import { PiShootingStarDuotone } from "react-icons/pi";
+import Navbar from "../Navbar";
 
 export const HomePage = () => {
   return (
@@ -12,17 +13,7 @@ export const HomePage = () => {
       className="flex flex-col min-h-screen bg-background text-foreground transition-colors duration-300"
     >
       {/* Minimal Navbar */}
-      <nav className="w-full flex items-center justify-between px-6 py-4 border-b border-border bg-background/80 backdrop-blur-sm">
-        <div className="flex items-center gap-2">
-          {/* Logo (replace with an img if you have one) */}
-          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg select-none">L</div>
-          <span className="ml-2 text-xl font-semibold tracking-tight">LearnHub</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <ModeToggle />
-          <Button>Sign In</Button>
-        </div>
-      </nav>
+      <Navbar/>
       <main className="flex justify-center items-center flex-col container mx-auto px-4 py-12 flex-1">
         <section className="mb-16 animate-fade-in">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
