@@ -4,6 +4,7 @@ import { Card } from "../ui/card";
 import { FaBoltLightning, FaBookOpen, FaPeopleGroup } from "react-icons/fa6";
 import { PiShootingStarDuotone } from "react-icons/pi";
 import Navbar from "../Navbar";
+import Link from "next/link";
 
 export const HomePage = () => {
   return (
@@ -38,10 +39,13 @@ export const HomePage = () => {
           <div className="mb-6 flex items-center justify-between">
             <span className="text-sm text-muted-foreground">
             </span>
-            <Button>
+            <Link href={"/dashboard"}>
+            
+            <Button >
               <CiPlay1 />
               Start Learning
             </Button>
+            </Link>
           </div>
         </section>
 

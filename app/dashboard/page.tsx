@@ -135,6 +135,13 @@ export default async function DashboardPage() {
         </div>
       </div>
     </div>
+    <div className="mt-10 text-sm text-gray-600">
+  Need help or feedback?{" "}
+  <a href="/guidance" className="underline">
+    Explore mentorship →
+  </a>
+</div>
+
     </div>
   );
 }
