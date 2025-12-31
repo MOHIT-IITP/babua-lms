@@ -1,3 +1,14 @@
+/* Dashboard Animations */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeInUp 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+.animate-progress {
+  transition: width 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
 @import "tailwindcss";
 @import "tw-animate-css";
 
