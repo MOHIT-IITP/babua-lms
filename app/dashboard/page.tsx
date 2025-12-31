@@ -1,6 +1,5 @@
 import { prisma } from "@/app/lib/db";
 import { requireUser } from "@/app/lib/hooks";
-import Navbar from "@/components/Navbar";
 
 import Link from "next/link";
 
@@ -44,15 +43,9 @@ export default async function DashboardPage() {
       progressPercent,
     };
   });
-  const streak = await prisma.streak.findUnique({
-  where: { userId },
-});
-
 
   return (
-    <div>
-        <Navbar/>
-    <div className="p-8 min-h-screen bg-linear-to-br from-[#e0e7ff] via-[#f0fdfa] to-[#c7d2fe] dark:from-[#18181b] dark:via-[#232946] dark:to-[#1a1a2e] transition-colors duration-700">
+    <div className="p-8 min-h-screen transition-colors duration-700">
       <h1 className="text-3xl font-bold mb-8 tracking-tight drop-shadow-lg">
         <span className="bg-linear-to-r from-black to-blue-600 dark:from-white dark:to-blue-400 bg-clip-text text-transparent">Welcome back, </span>
         <span className="bg-linear-to-r from-black to-blue-600 dark:from-white dark:to-blue-400 bg-clip-text text-transparent font-extrabold">{session.user?.name}</span>
@@ -104,44 +97,13 @@ export default async function DashboardPage() {
             ))}
           </div>
         </div>
-        {/* Right: Streak Cards (2/6) */}
-        <div className="w-full md:w-2/6 flex flex-col gap-6">
-          <div className="relative rounded-xl p-5 shadow-lg bg-linear-to-br from-yellow-100 via-orange-200 to-pink-100 dark:from-yellow-900/40 dark:via-orange-900/30 dark:to-pink-900/30 backdrop-blur-md animate-fade-in streak-card overflow-hidden group hover:scale-[1.04] hover:shadow-2xl transition-all duration-300" style={{ animation: 'fadeInUp 0.5s 0.1s both' }}>
-            <p className="text-xs text-yellow-700 dark:text-yellow-200 font-medium mb-1 flex items-center gap-1">
-              Current Streak <span className="animate-fire">🔥</span>
-            </p>
-            <p className="text-3xl font-extrabold text-yellow-900 dark:text-yellow-100">
-              {streak?.currentStreak ?? 0}
-            </p>
-          </div>
-          <div className="relative rounded-xl p-5 shadow-lg bg-linear-to-br from-indigo-100 via-blue-100 to-cyan-100 dark:from-indigo-900/40 dark:via-blue-900/30 dark:to-cyan-900/30 backdrop-blur-md animate-fade-in streak-card overflow-hidden group hover:scale-[1.04] hover:shadow-2xl transition-all duration-300" style={{ animation: 'fadeInUp 0.5s 0.2s both' }}>
-            <p className="text-xs text-indigo-700 dark:text-indigo-200 font-medium mb-1">Longest Streak</p>
-            <p className="text-3xl font-extrabold text-indigo-900 dark:text-indigo-100">
-              {streak?.longestStreak ?? 0}
-            </p>
-          </div>
-          <div className="relative rounded-xl p-5 shadow-lg bg-linear-to-br from-green-100 via-lime-100 to-emerald-100 dark:from-green-900/40 dark:via-lime-900/30 dark:to-emerald-900/30 backdrop-blur-md animate-fade-in streak-card overflow-hidden group hover:scale-[1.04] hover:shadow-2xl transition-all duration-300" style={{ animation: 'fadeInUp 0.5s 0.3s both' }}>
-            <p className="text-xs text-green-700 dark:text-green-200 font-medium mb-1">Courses</p>
-            <p className="text-3xl font-extrabold text-green-900 dark:text-green-100">
-              {coursesWithProgress.length}
-            </p>
-          </div>
-          <div className="relative rounded-xl p-5 shadow-lg bg-linear-to-br from-purple-100 via-pink-100 to-fuchsia-100 dark:from-purple-900/40 dark:via-pink-900/30 dark:to-fuchsia-900/30 backdrop-blur-md animate-fade-in streak-card overflow-hidden group hover:scale-[1.04] hover:shadow-2xl transition-all duration-300" style={{ animation: 'fadeInUp 0.5s 0.4s both' }}>
-            <p className="text-xs text-purple-700 dark:text-purple-200 font-medium mb-1">Completed</p>
-            <p className="text-3xl font-extrabold text-purple-900 dark:text-purple-100">
-              {coursesWithProgress.filter(c => c.progressPercent === 100).length}
-            </p>
-          </div>
-        </div>
       </div>
-    </div>
-    <div className="mt-10 text-sm text-gray-600">
+      <div className="mt-10 text-sm text-gray-600">
   Need help or feedback?{" "}
   <a href="/guidance" className="underline">
     Explore mentorship →
   </a>
 </div>
-
     </div>
   );
 }
