@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { Button } from "./ui/button"
 import { ModeToggle } from "./ui/Modetoggle"
 import { AuthModal } from "./AuthModal"
 
@@ -17,7 +16,6 @@ const Navbar = () => {
             <div className="flex items-center gap-2">
               <ModeToggle />
               <AuthModal/>
-              {/* <Button>Sign In</Button> */}
             </div>
           </nav>
   )
