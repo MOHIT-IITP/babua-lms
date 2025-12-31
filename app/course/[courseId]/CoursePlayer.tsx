@@ -72,12 +72,36 @@ useEffect(() => {
 }, []);
 
 
-  return (
-    <div className="flex h-[calc(100vh-64px)]">
-      {/* LEFT */}
-      <aside className="w-80 border-r p-4 overflow-y-auto">
-        <h2 className="font-semibold mb-4">{courseTitle}</h2>
+  const completedCount = completedSet.size;
+  const totalCount = lectures.length;
+  const progressPercent = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
+  return (
+    <div className="flex h-[calc(100vh-64px)] bg-gradient-to-br from-violet-50 via-white to-fuchsia-50 dark:from-violet-950 dark:via-gray-900 dark:to-purple-950">
+      {/* LEFT - Sidebar */}
+      <aside className="w-80 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border-r border-gray-200/50 dark:border-gray-700/50 p-5 overflow-y-auto shadow-xl">
+        {/* Course Title */}
+        <div className="mb-6">
+          <h2 className="font-bold text-lg text-gray-800 dark:text-white tracking-tight">
+            {courseTitle}
+          </h2>
+          
+          {/* Progress Bar */}
+          <div className="mt-4">
+            <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-2">
+              <span>{completedCount} of {totalCount} completed</span>
+              <span className="font-semibold text-emerald-600 dark:text-emerald-400">{progressPercent}%</span>
+            </div>
+            <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-linear-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-500 ease-out"
+                style={{ width: `${progressPercent}%` }}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Lecture List */}
         <ul className="space-y-2">
           {lectures.map((lecture) => {
             const isActive = lecture.id === activeLecture.id;
@@ -87,61 +111,134 @@ useEffect(() => {
               <li
                 key={lecture.id}
                 onClick={() => setActiveLecture(lecture)}
-                className={`flex items-center gap-2 p-2 rounded cursor-pointer
-                  ${isActive ? "bg-black text-white" : "hover:bg-gray-100"}
+                className={`group flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all duration-200
+                  ${isActive 
+                    ? "bg-linear-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-500/25" 
+                    : "hover:bg-gray-100 dark:hover:bg-gray-700/50 text-gray-700 dark:text-gray-300"
+                  }
                 `}
               >
-                <input
-                  type="checkbox"
-                  checked={isDone}
-                  disabled={isPending}
-                  onChange={() => toggle(lecture.id)}
-                  onClick={(e) => e.stopPropagation()}
-                />
-
-                <span
-                  className={`text-sm ${
-                    isDone ? "line-through opacity-70" : ""
-                  }`}
+                {/* Custom Checkbox */}
+                <div 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggle(lecture.id);
+                  }}
+                  className={`flex-shrink-0 w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all duration-200
+                    ${isDone 
+                      ? "bg-emerald-500 border-emerald-500" 
+                      : isActive 
+                        ? "border-white/50 hover:border-white" 
+                        : "border-gray-300 dark:border-gray-600 hover:border-violet-500"
+                    }
+                    ${isPending ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
+                  `}
                 >
-                  {lecture.order}. {lecture.title}
-                </span>
+                  {isDone && (
+                    <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                </div>
+
+                {/* Lecture Info */}
+                <div className="flex-1 min-w-0">
+                  <span
+                    className={`text-sm font-medium block truncate ${
+                      isDone && !isActive ? "line-through opacity-60" : ""
+                    }`}
+                  >
+                    {lecture.order}. {lecture.title}
+                  </span>
+                </div>
+
+                {/* Active Indicator */}
+                {isActive && (
+                  <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                )}
               </li>
             );
           })}
         </ul>
       </aside>
 
-      {/* RIGHT */}
-      <main className="flex-1 p-6 overflow-y-auto">
-        <h1 className="text-xl font-semibold mb-4">
-          {activeLecture.title}
-        </h1>
+      {/* RIGHT - Main Content */}
+      <main className="flex-1 p-8 overflow-y-auto">
+        <div className="max-w-5xl mx-auto">
+          {/* Video Title */}
+          <div className="mb-6">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="px-3 py-1 text-xs font-semibold rounded-full bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300">
+                Lecture {activeLecture.order}
+              </span>
+              {completedSet.has(activeLecture.id) && (
+                <span className="px-3 py-1 text-xs font-semibold rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 flex items-center gap-1">
+                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                  Completed
+                </span>
+              )}
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">
+              {activeLecture.title}
+            </h1>
+          </div>
 
-        <div className="aspect-video w-full rounded overflow-hidden bg-black mb-6">
-          <iframe
-            key={activeLecture.id}
-            src={activeLecture.videoUrl}
-            className="w-full h-full"
-            allowFullScreen
-          />
+          {/* Video Player Container */}
+          <div className="aspect-video w-full rounded-2xl overflow-hidden bg-gray-900 mb-8 shadow-2xl ring-1 ring-gray-900/5 dark:ring-white/10">
+            <iframe
+              key={activeLecture.id}
+              src={activeLecture.videoUrl}
+              className="w-full h-full"
+              allowFullScreen
+            />
+          </div>
+
+          {/* Description Card */}
+          {activeLecture.description && (
+            <div className="bg-white dark:bg-gray-800/50 rounded-2xl p-6 shadow-lg ring-1 ring-gray-900/5 dark:ring-white/10">
+              <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
+                About this lecture
+              </h3>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                {activeLecture.description}
+              </p>
+            </div>
+          )}
+
+          {/* Mark as Complete Button */}
+          <div className="mt-6 flex justify-end">
+            <button
+              onClick={() => toggle(activeLecture.id)}
+              disabled={isPending}
+              className={`px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200 flex items-center gap-2
+                ${completedSet.has(activeLecture.id)
+                  ? "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  : "bg-linear-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/30 hover:-translate-y-0.5"
+                }
+                ${isPending ? "opacity-50 cursor-not-allowed" : ""}
+              `}
+            >
+              {completedSet.has(activeLecture.id) ? (
+                <>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                  Mark as Incomplete
+                </>
+              ) : (
+                <>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Mark as Complete
+                </>
+              )}
+            </button>
+          </div>
         </div>
-
-        <p className="text-sm text-gray-600">
-          {activeLecture.description}
-        </p>
       </main>
-
-{/*       
-      <button
-  onClick={() => {
-    updateDailyStreak(31);
-  }}
-  className="mt-4 px-3 py-1 border rounded text-sm"
->
-  Test Streak (+31 min)
-</button> */}
-
     </div>
   );
 }
