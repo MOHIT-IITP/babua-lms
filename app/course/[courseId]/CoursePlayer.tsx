@@ -1,7 +1,11 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import { updateDailyStreak } from "@/app/lib/streak";
+
 import { useState, useTransition } from "react";
 import { toggleLectureProgress } from "./action";
+
 
 type Lecture = {
   id: string;
@@ -21,13 +25,17 @@ export default function CoursePlayer({
   courseTitle,
   lectures,
   progress,
+  initialLectureId,
 }: {
   courseId: string;
   courseTitle: string;
   lectures: Lecture[];
   progress: Progress[];
-}) {
-  const [activeLecture, setActiveLecture] = useState<Lecture>(lectures[0]);
+  initialLectureId: string;
+})  {
+  const [activeLecture, setActiveLecture] = useState(
+  lectures.find(l => l.id === initialLectureId) ?? lectures[0]
+);
   const [isPending, startTransition] = useTransition();
 
   // ✅ LOCAL state (THIS FIXES EVERYTHING)
@@ -48,6 +56,21 @@ export default function CoursePlayer({
       await toggleLectureProgress(lectureId, courseId);
     });
   };
+  // eslint-disable-next-line react-hooks/purity
+  const startTimeRef = useRef<number>(Date.now());
+
+useEffect(() => {
+  return () => {
+    const minutesSpent = Math.floor(
+      (Date.now() - startTimeRef.current) / 60000
+    );
+
+    if (minutesSpent >= 1) {
+      updateDailyStreak(minutesSpent);
+    }
+  };
+}, []);
+
 
   return (
     <div className="flex h-[calc(100vh-64px)]">
@@ -108,6 +131,17 @@ export default function CoursePlayer({
           {activeLecture.description}
         </p>
       </main>
+
+{/*       
+      <button
+  onClick={() => {
+    updateDailyStreak(31);
+  }}
+  className="mt-4 px-3 py-1 border rounded text-sm"
+>
+  Test Streak (+31 min)
+</button> */}
+
     </div>
   );
 }

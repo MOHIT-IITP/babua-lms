@@ -42,12 +42,46 @@ export default async function DashboardPage() {
       progressPercent,
     };
   });
+  const streak = await prisma.streak.findUnique({
+  where: { userId },
+});
+
 
   return (
     <div className="p-8">
       <h1 className="text-2xl font-semibold mb-6">
         Welcome back, {session.user?.name}
       </h1>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+  <div className="border rounded-lg p-4">
+    <p className="text-xs text-gray-500">Current Streak</p>
+    <p className="text-2xl font-semibold">
+      {streak?.currentStreak ?? 0} 🔥
+    </p>
+  </div>
+
+  <div className="border rounded-lg p-4">
+    <p className="text-xs text-gray-500">Longest Streak</p>
+    <p className="text-2xl font-semibold">
+      {streak?.longestStreak ?? 0}
+    </p>
+  </div>
+
+  <div className="border rounded-lg p-4">
+    <p className="text-xs text-gray-500">Courses</p>
+    <p className="text-2xl font-semibold">
+      {coursesWithProgress.length}
+    </p>
+  </div>
+
+  <div className="border rounded-lg p-4">
+    <p className="text-xs text-gray-500">Completed</p>
+    <p className="text-2xl font-semibold">
+      {coursesWithProgress.filter(c => c.progressPercent === 100).length}
+    </p>
+  </div>
+</div>
+
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {coursesWithProgress.map((course) => (
