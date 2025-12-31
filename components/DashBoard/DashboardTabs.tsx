@@ -44,7 +44,7 @@ export default function DashboardTabs({ courseSection }: DashboardTabsProps) {
         {activeTab === "courses" ? (
           courseSection
         ) : (
-          <div className="flex items-center justify-center min-h-[400px] bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-900/50 rounded-2xl border-2 border-dashed border-gray-300 dark:border-gray-600">
+          <div className="flex items-center justify-center min-h-[400px] bg-linear-to-br from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-900/50 rounded-2xl border-2 border-dashed border-gray-300 dark:border-gray-600">
             <div className="text-center p-8">
               <div className="text-6xl mb-4">✨</div>
               <h2 className="text-3xl font-bold text-gray-700 dark:text-gray-200 mb-2">
