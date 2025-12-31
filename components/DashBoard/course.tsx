@@ -1,14 +1,51 @@
-import CourseSection from "@/components/DashBoard/course";
-import DashboardTabs from "@/components/DashBoard/DashboardTabs";
-import { requireUser } from "../lib/hooks";
+import { prisma } from "@/app/lib/db";
+import { requireUser } from "@/app/lib/hooks";
 
-export default async function DashboardPage() {
-  const user = await requireUser();
+import Link from "next/link";
+
+export default async function CourseSection() {
+    const session = await requireUser();
+    const userId = session.user?.id;
+
+    const courses = await prisma.course.findMany({
+        include: {
+            lectures: {
+                select: { id: true },
+            },
+            progress: {
+                where: {
+                    userId,
+                    completed: true,
+                },
+                select: {
+                    lectureId: true,
+                },
+            },
+        },
+        orderBy: { createdAt: "asc" },
+    });
+
+    const coursesWithProgress = courses.map((course) => {
+        const totalLectures = course.lectures.length;
+        const completedLectures = course.progress.length;
+
+        const progressPercent =
+            totalLectures === 0
+                ? 0
+                : Math.round((completedLectures / totalLectures) * 100);
+
+    return {
+      id: course.id,
+      title: course.title,
+      description: course.description,
+      totalLectures,
+      completedLectures,
+      progressPercent,
+    };
+  });
+
   return (
-    <div>
-      <h1 className="p-8 text-3xl font-bold mb-8 tracking-tight text-gray-800 dark:text-gray-100">
-        Welcome Back, <span className="font-semibold text-blue-600 dark:text-blue-400">{user?.user?.name}</span>
-      </h1>
+    <div className="p-8 min-h-screen transition-colors duration-700">
       <div className="flex flex-col md:flex-row gap-8">
         {/* Left: Courses (4/6) */}
         <div className="w-full md:w-4/6">
@@ -57,12 +94,6 @@ export default async function DashboardPage() {
           </div>
         </div>
       </div>
-      <div className="mt-10 text-sm text-gray-600">
-  Need help or feedback?{" "}
-  <a href="/guidance" className="underline">
-    Explore mentorship →
-  </a>
-</div>
     </div>
   );
 }
