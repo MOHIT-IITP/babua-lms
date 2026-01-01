@@ -10,6 +10,7 @@ type Lecture = {
   id: string;
   title: string;
   description?: string | null;
+  takeaways?: string[]; // ✅ NEW
   videoUrl: string;
   order: number;
 };
@@ -33,22 +34,22 @@ export default function CoursePlayer({
   initialLectureId: string;
 }) {
   const [activeLecture, setActiveLecture] = useState(
-    lectures.find(l => l.id === initialLectureId) ?? lectures[0]
+    lectures.find((l) => l.id === initialLectureId) ?? lectures[0]
   );
 
   const [isPending, startTransition] = useTransition();
 
   // ✅ Completed lectures state
   const [completedSet, setCompletedSet] = useState<Set<string>>(
-    new Set(progress.filter(p => p.completed).map(p => p.lectureId))
+    new Set(progress.filter((p) => p.completed).map((p) => p.lectureId))
   );
 
-  // 🔒 LOCK LOGIC
+  // 🔒 Lock logic
   const maxCompletedOrder = Math.max(
     0,
     ...lectures
-      .filter(l => completedSet.has(l.id))
-      .map(l => l.order)
+      .filter((l) => completedSet.has(l.id))
+      .map((l) => l.order)
   );
 
   const maxUnlockedOrder = maxCompletedOrder + 1;
@@ -58,7 +59,7 @@ export default function CoursePlayer({
     if (lectureOrder > maxUnlockedOrder) return;
     if (completedSet.has(lectureId)) return;
 
-    setCompletedSet(prev => {
+    setCompletedSet((prev) => {
       const next = new Set(prev);
       next.add(lectureId);
       return next;
@@ -143,7 +144,11 @@ export default function CoursePlayer({
                     completeLecture(lecture.id, lecture.order);
                   }}
                   className={`w-5 h-5 rounded-md border flex items-center justify-center
-                    ${isDone ? "bg-emerald-500 border-emerald-500" : "border-gray-300"}
+                    ${
+                      isDone
+                        ? "bg-emerald-500 border-emerald-500"
+                        : "border-gray-300"
+                    }
                   `}
                 >
                   {isDone && (
@@ -164,9 +169,7 @@ export default function CoursePlayer({
                 </span>
 
                 {isLocked && (
-                  <span className="ml-auto text-xs text-gray-400">
-                    Locked
-                  </span>
+                  <span className="ml-auto text-xs text-gray-400">Locked</span>
                 )}
               </li>
             );
@@ -179,9 +182,7 @@ export default function CoursePlayer({
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-bold">
-              {activeLecture.title}
-            </h1>
+            <h1 className="text-2xl font-bold">{activeLecture.title}</h1>
             <Link href="/dashboard">
               <Button>Back</Button>
             </Link>
@@ -197,17 +198,56 @@ export default function CoursePlayer({
             />
           </div>
 
-          {/* Description */}
-          {activeLecture.description && (
-            <div className="bg-white rounded-xl p-6 mb-6">
-              <h3 className="text-sm font-semibold mb-2">
-                About this lecture
-              </h3>
-              <p className="text-gray-700">
-                {activeLecture.description}
-              </p>
-            </div>
-          )}
+          {/* Description & Takeaways Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            {/* Description */}
+            {activeLecture.description && (
+              <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow duration-300">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-violet-100 dark:bg-violet-900/30 rounded-lg">
+                    <svg className="w-5 h-5 text-violet-600 dark:text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wide">
+                    About this lecture
+                  </h3>
+                </div>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm">
+                  {activeLecture.description}
+                </p>
+              </div>
+            )}
+
+            {/* Takeaways */}
+            {activeLecture.takeaways &&
+              activeLecture.takeaways.length > 0 && (
+                <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-2xl p-6 shadow-lg border border-emerald-100 dark:border-emerald-800 hover:shadow-xl transition-shadow duration-300">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg">
+                      <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wide">
+                      {`What you'll learn`}
+                    </h3>
+                  </div>
+                  <ul className="space-y-3">
+                    {activeLecture.takeaways.map((point, idx) => (
+                      <li key={idx} className="flex items-start gap-3 text-sm">
+                        <span className="flex-shrink-0 w-5 h-5 rounded-full bg-emerald-500 dark:bg-emerald-600 flex items-center justify-center text-white text-xs font-semibold mt-0.5">
+                          {idx + 1}
+                        </span>
+                        <span className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                          {point}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+          </div>
 
           {/* Complete Button */}
           <div className="flex justify-end">

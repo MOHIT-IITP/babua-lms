@@ -74,6 +74,8 @@ model Course {
   description   String?
   totalLectures Int
 
+  difficulty    CourseDifficulty @default(BEGINNER)
+
   lectures      Lecture[]
   progress      Progress[]
 
@@ -81,19 +83,23 @@ model Course {
   updatedAt     DateTime @updatedAt
 }
 
+
 model Lecture {
-  id        String   @id @default(cuid())
-  courseId  String
-  title     String
+  id          String   @id @default(cuid())
+  courseId    String
+  title       String
   description String?
-  videoUrl  String
-  order     Int
+  videoUrl    String
+  order       Int
 
-  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  progress  Progress[]
+  takeaways   String[] @default([])
 
-  createdAt DateTime @default(now())
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  progress    Progress[]
+
+  createdAt   DateTime @default(now())
 }
+
 
 model Progress {
   id         String   @id @default(cuid())
@@ -122,4 +128,10 @@ model Streak {
   lastActive    DateTime?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum CourseDifficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
 }

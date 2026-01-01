@@ -64,16 +64,34 @@ if (latestProgress) {
         Welcome back, {session.user?.name} 👋
       </h1>
 
-      {/* ✅ CONTINUE LEARNING */}
-{resumeCourse && resumeLecture && (
-  <ContinueLearningCard
-    courseId={resumeCourse.id}
-    courseTitle={resumeCourse.title}
-    lectureId={resumeLecture.id}
-    lectureTitle={resumeLecture.title}
-    lectureOrder={resumeLecture.order}
-  />
-)}
+      {/* ✅ CONTINUE LEARNING OR GET STARTED */}
+      {resumeCourse && resumeLecture ? (
+        <ContinueLearningCard
+          courseId={resumeCourse.id}
+          courseTitle={resumeCourse.title}
+          lectureId={resumeLecture.id}
+          lectureTitle={resumeLecture.title}
+          lectureOrder={resumeLecture.order}
+        />
+      ) : (
+        <div className="mx-7 mb-8 rounded-2xl p-8 shadow-lg bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-900/20 dark:to-purple-900/20 border border-violet-200 dark:border-violet-800">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="p-3 bg-violet-500 rounded-full">
+              <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                Start Your Learning Journey! 🚀
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                Choose a course below to begin mastering new skills
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
 
       <DashboardTabs
