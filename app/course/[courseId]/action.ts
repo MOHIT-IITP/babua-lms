@@ -2,6 +2,7 @@
 
 import { prisma } from "@/app/lib/db";
 import { requireUser } from "@/app/lib/hooks";
+import { revalidatePath } from "next/cache";
 
 export async function toggleLectureProgress(lectureId: string, courseId: string) {
   const session = await requireUser();
@@ -39,4 +40,8 @@ export async function toggleLectureProgress(lectureId: string, courseId: string)
       },
     });
   }
+
+  // Revalidate the dashboard and course pages so progress updates reflect
+  revalidatePath("/dashboard");
+  revalidatePath(`/course/${courseId}`);
 }
