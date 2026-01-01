@@ -20,7 +20,7 @@ export default async function GuidancePage() {
         {/* ================= HEADER ================= */}
         <div className="text-center mb-16">
           <h1 className="text-4xl font-semibold mb-4 dark:text-white">
-            Need guidance? We've got you.
+            {`Need guidance? We've got you.`}
           </h1>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Babua keeps all learning content completely free.
@@ -138,7 +138,7 @@ export default async function GuidancePage() {
 <div className="mt-28">
   <div className="text-center mb-12">
     <h2 className="text-3xl font-semibold mb-3 dark:text-white">
-      Learn from engineers who've been there
+      {`Learn from engineers who've been there`}
     </h2>
     <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
       Babua mentors are working engineers and experienced problem solvers.
