@@ -5,6 +5,8 @@ import { updateDailyStreak } from "@/app/lib/streak";
 
 import { useState, useTransition } from "react";
 import { toggleLectureProgress } from "./action";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 
 type Lecture = {
@@ -164,10 +166,10 @@ useEffect(() => {
 
       {/* RIGHT - Main Content */}
       <main className="flex-1 p-8 overflow-y-auto">
-        <div className="border border-red-600 p-4">
+        {/* <div className="border border-red-600 p-4">
           <p>Debug: description = `{activeLecture.description ?? "NULL/UNDEFINED"}`</p>
           <p>Type: {typeof activeLecture.description}</p>
-        </div>
+        </div> */}
         <div className="max-w-5xl mx-auto">
           {/* Video Title */}
           <div className="mb-6">
@@ -184,9 +186,15 @@ useEffect(() => {
                 </span>
               )}
             </div>
+            <div className="flex flex-row justify-between ">
+
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">
               {activeLecture.title}
             </h1>
+            <Link  href={"/dashboard"}>
+            <Button className="cursor-pointer" >BACK</Button>
+            </Link>
+            </div>
           </div>
 
           {/* Video Player Container */}

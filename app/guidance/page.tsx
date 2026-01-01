@@ -7,14 +7,14 @@ export default async function GuidancePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-white dark:from-gray-900 dark:via-gray-950 dark:to-gray-950 px-6 py-16">
       <div className="max-w-6xl mx-auto">
-          <div className="mb-5">
+          {/* <div className="mb-5">
   <Link
     href="/dashboard"
     className="inline-flex font-bold items-center gap-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
   >
     ← Back to Dashboard
   </Link>
-</div>
+</div> */}
 
 
         {/* ================= HEADER ================= */}
