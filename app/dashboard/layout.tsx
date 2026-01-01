@@ -45,10 +45,10 @@ export default async function DashboardLayout({
       <main>
         <Navbar />
         <div className="flex flex-col md:flex-row gap-8 mb-8">
-          <div className="w-full md:w-4/6">
+          <div className="w-full md:w-5/6">
             {children}
           </div>
-          <div className="w-full md:w-2/6 flex flex-col mt-7 gap-6">
+          <div className="w-full md:w-1/6 flex flex-col mt-7 gap-6">
             <div className="relative rounded-xl p-5 shadow-lg bg-linear-to-br from-white via-blue-50 to-blue-100 dark:from-blue-900/60 dark:via-blue-950/70 dark:to-blue-950/80 backdrop-blur-md animate-fade-in streak-card overflow-hidden group hover:scale-[1.03] hover:shadow-2xl transition-all duration-300" style={{ animation: 'fadeInUp 0.5s 0.1s both' }}>
               <p className="text-xs text-blue-700 dark:text-blue-200 font-medium mb-1 flex items-center gap-1">Current Streak</p>
               <p className="text-3xl font-extrabold text-blue-900 dark:text-blue-100">{streak?.currentStreak ?? 0}</p>

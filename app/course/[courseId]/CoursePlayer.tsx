@@ -77,9 +77,9 @@ useEffect(() => {
   const progressPercent = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
   return (
-    <div className="flex h-[calc(100vh-64px)] bg-gradient-to-br from-violet-50 via-white to-fuchsia-50 dark:from-violet-950 dark:via-gray-900 dark:to-purple-950">
+    <div className="flex  h-[100vh] bg-gradient-to-br from-violet-50 via-white to-fuchsia-50 dark:from-violet-950 dark:via-gray-900 dark:to-purple-950">
       {/* LEFT - Sidebar */}
-      <aside className="w-80 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border-r border-gray-200/50 dark:border-gray-700/50 p-5 overflow-y-auto shadow-xl">
+      <aside className="w-80 h-full  bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border-r border-gray-200/50 dark:border-gray-700/50 p-5 overflow-y-auto shadow-xl">
         {/* Course Title */}
         <div className="mb-6">
           <h2 className="font-bold text-lg text-gray-800 dark:text-white tracking-tight">
@@ -164,6 +164,10 @@ useEffect(() => {
 
       {/* RIGHT - Main Content */}
       <main className="flex-1 p-8 overflow-y-auto">
+        <div className="border border-red-600 p-4">
+          <p>Debug: description = `{activeLecture.description ?? "NULL/UNDEFINED"}`</p>
+          <p>Type: {typeof activeLecture.description}</p>
+        </div>
         <div className="max-w-5xl mx-auto">
           {/* Video Title */}
           <div className="mb-6">
