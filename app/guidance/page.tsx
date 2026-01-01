@@ -5,7 +5,7 @@ export default async function GuidancePage() {
   await requireUser();
 
   return (
-    <div className="min-h-screen bg-transparent  px-6 py-16">
+    <div className="min-h-screen bg-transparent  px-6 py-10">
       <div className="max-w-6xl mx-auto">
           {/* <div className="mb-5">
   <Link

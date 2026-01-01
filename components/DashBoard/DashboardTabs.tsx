@@ -13,7 +13,7 @@ export default function DashboardTabs({ courseSection, guidanceSection }: Dashbo
   return (
     <div>
       {/* Tab Navigation */}
-      <div className="w-full mb-8 flex items-center justify-center">
+      <div className="w-full mb-5 flex items-center justify-center">
         <div className="inline-flex bg-gray-100 dark:bg-gray-800 rounded-full p-1.5" style={{ fontFamily: "'Poppins', sans-serif" }}>
           <button
             onClick={() => setActiveTab("courses")}
